@@ -16,7 +16,7 @@
     { "id": "m", "name": "M Museum Leuven", "lat": 50.8752, "lng": 4.7003,
       "text": "Art museum that mixes old masters, modern work and historic city fragments." },
     { "id": "begijnhof", "name": "Groot Begijnhof", "lat": 50.8727, "lng": 4.7086,
-      "text": "End of the walk. A quiet brick beguinage along the Dijle, now part of the university." }
+      "text": "End of the walk. A quiet brick beguinage along the Dijle, now part of the university." },
     { "id": "sint-wintenskerk", "name": "Sint Kwintenskerk", "lat": 50.870278, "lng": 4.698611,
       "text": "Wat kan ik zeggen, het is een kerk." }
   ]
