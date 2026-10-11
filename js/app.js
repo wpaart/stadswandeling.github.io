@@ -169,6 +169,16 @@
   });
 
   // ---------- full-size viewer ----------
+  // The viewer markup normally lives in index.html; create it here if it is missing
+  // (for example when an older index.html is still deployed).
+  if (!$('#lightbox')) {
+    document.body.insertAdjacentHTML('beforeend', `
+      <div id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Full-size photo">
+        <button id="lb-close" aria-label="Close photo">&times;</button>
+        <div id="lb-scroll"><img id="lb-img" alt=""></div>
+        <p id="lb-cap"></p>
+      </div>`);
+  }
   const lb = $('#lightbox'), lbImg = $('#lb-img'), lbScroll = $('#lb-scroll');
   function openLightbox(id) {
     const p = photos.find(x => x.id === id); if (!p) return;
