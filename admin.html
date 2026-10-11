@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photo upload · Leuven city walk</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root{--ink:#14213d;--paper:#f3f5f2;--line:#d5dad2;--muted:#5b6575;--me:#1a73e8;--bad:#d1342f;--ok:#1b7f3b}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  h1{font:700 26px/1.2 Georgia,serif;margin:0 0 4px} h2{font-size:17px;margin:0 0 10px}
+  a{color:var(--me)}
+  section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
+  label{display:block;font-size:13px;color:var(--muted);margin:8px 0 2px}
+  input[type=text],input[type=password],input[type=number]{width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px}
+  button,.btn{font:inherit;border:1px solid var(--ink);background:var(--ink);color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;display:inline-block}
+  button.ghost{background:#fff;color:var(--ink)} button.danger{background:#fff;color:var(--bad);border-color:var(--bad)}
+  button:disabled{opacity:.5;cursor:default}
+  :focus-visible{outline:3px solid var(--me);outline-offset:2px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px} .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  @media(max-width:600px){.grid3{grid-template-columns:1fr}}
+  .hint{color:var(--muted);font-size:13px}
+  #cards{display:grid;gap:10px;margin-top:12px}
+  .card{display:grid;grid-template-columns:110px 1fr;gap:12px;border:2px solid var(--line);border-radius:10px;padding:10px;background:#fff}
+  .card.active{border-color:var(--me)}
+  .card img{width:110px;height:110px;object-fit:cover;border-radius:8px;background:#ccd}
+  .card .row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px} .card .row button{padding:5px 10px;font-size:13px}
+  .status{font-size:13px;margin-top:4px} .status.ok{color:var(--ok)} .status.bad{color:var(--bad)}
+  #pick-map{height:340px;border-radius:10px;border:1px solid var(--line)}
+  #log{white-space:pre-wrap;font:13px/1.5 ui-monospace,Menlo,monospace;background:#101827;color:#d6e0f0;border-radius:8px;padding:10px;margin-top:10px;max-height:220px;overflow:auto;display:none}
+  .existing{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+  .existing figure{margin:0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .existing img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+  .existing figcaption{padding:6px 8px;font-size:13px}
+  .photo-dot{width:22px;height:22px;border-radius:50%;background:var(--me);border:3px solid #fff;box-shadow:0 1px 5px #0006;color:#fff;font:700 11px/16px system-ui;text-align:center}
+  .photo-dot.active{background:var(--bad)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Add photos to the walk</h1>
+  <p class="hint"><a href="index.html">← Back to the map</a>. Photos are committed straight to your GitHub repository, and GitHub Pages republishes the site within about a minute.</p>
+
+  <section>
+    <h2>1. Connect to your repository</h2>
+    <div class="grid3">
+      <div><label for="owner">GitHub user or organisation</label><input type="text" id="owner" autocomplete="off"></div>
+      <div><label for="repo">Repository</label><input type="text" id="repo" autocomplete="off"></div>
+      <div><label for="branch">Branch published by Pages</label><input type="text" id="branch" value="main" autocomplete="off"></div>
+    </div>
+    <label for="token">Personal access token</label>
+    <input type="password" id="token" autocomplete="off" placeholder="github_pat_…">
+    <p class="hint">Use a fine-grained token limited to this one repository with <b>Contents: Read and write</b>. It is kept in this browser only and sent only to api.github.com.</p>
+    <button id="save-cfg">Save settings</button> <button id="forget" class="ghost">Forget token</button>
+  </section>
+
+  <section>
+    <h2>2. Choose photos</h2>
+    <input type="file" id="files" accept="image/*" multiple>
+    <p class="hint">GPS coordinates are read from each photo. If a photo has none (many phones strip it when sharing), select it and click the map, drag its pin, or use your current location.</p>
+    <div id="cards"></div>
+  </section>
+
+  <section>
+    <h2>3. Check locations</h2>
+    <div id="pick-map"></div>
+    <p class="hint">Select a photo card, then click the map to place it. Drag a pin to fine-tune.</p>
+  </section>
+
+  <section>
+    <h2>4. Publish</h2>
+    <button id="upload" disabled>Upload photos</button>
+    <div id="log"></div>
+  </section>
+
+  <section>
+    <h2>Published photos</h2>
+    <button id="refresh" class="ghost">Load from repository</button>
+    <div class="existing" id="existing"></div>
+  </section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
