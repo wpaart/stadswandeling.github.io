@@ -65,14 +65,15 @@
   });
   function popupHtml(p) {
     const d = me ? `<small>${fmt(dist([me.lat, me.lng], [p.lat, p.lng]))} from you</small>` : '';
-    return `<div class="pop"><img class="pop-img" src="${esc(p.file)}" alt="${esc(p.title)}">
-      <h3>${esc(p.title || 'Photo')}</h3>${p.caption ? `<p>${esc(p.caption)}</p>` : ''}${d}</div>`;
+    return `<div class="pop"><img class="pop-img" src="${esc(p.file)}" alt="${esc(p.title)}" data-full="${esc(p.id)}">
+      <h3>${esc(p.title || 'Photo')}</h3>${p.caption ? `<p>${esc(p.caption)}</p>` : ''}${d}
+      <div><button class="pop-full" data-full="${esc(p.id)}">View full size</button></div></div>`;
   }
   function renderPhotos() {
     photoMarkers.forEach(m => m.remove()); photoMarkers.clear();
     photos.forEach(p => {
       const m = L.marker([p.lat, p.lng], { icon: photoIcon(p, false), zIndexOffset: 500 }).addTo(map);
-      m.bindPopup(() => popupHtml(p), { maxWidth: 260 });
+      m.bindPopup(() => popupHtml(p), { className: 'photo-popup', maxWidth: 640, autoPanPadding: [12, 70] });
       photoMarkers.set(p.id, m);
     });
     $('#photo-count').textContent = photos.length;
@@ -160,6 +161,31 @@
     if (s) { const m = stopMarkers.get(s.dataset.stop); map.flyTo(m.getLatLng(), 18); m.openPopup(); $('#sheet').classList.add('collapsed'); }
     if (p) { const m = photoMarkers.get(p.dataset.photo); map.flyTo(m.getLatLng(), 19); m.openPopup(); $('#sheet').classList.add('collapsed'); }
   });
+
+  // re-measure the popup once its image has loaded so it fits and stays on screen
+  map.on('popupopen', e => {
+    const img = e.popup.getElement()?.querySelector('.pop-img');
+    if (img && !img.complete) img.addEventListener('load', () => e.popup.update(), { once: true });
+  });
+
+  // ---------- full-size viewer ----------
+  const lb = $('#lightbox'), lbImg = $('#lb-img'), lbScroll = $('#lb-scroll');
+  function openLightbox(id) {
+    const p = photos.find(x => x.id === id); if (!p) return;
+    lbScroll.classList.remove('zoomed');
+    lbImg.src = p.file; lbImg.alt = p.title || '';
+    $('#lb-cap').textContent = [p.title, p.caption].filter(Boolean).join(' · ');
+    lb.hidden = false; $('#lb-close').focus();
+  }
+  function closeLightbox() { lb.hidden = true; lbImg.removeAttribute('src'); }
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-full]');
+    if (t && !lb.contains(t)) openLightbox(t.dataset.full);
+  });
+  lbImg.onclick = () => lbScroll.classList.toggle('zoomed');   // tap: fit screen <-> actual pixels
+  $('#lb-close').onclick = closeLightbox;
+  lbScroll.onclick = e => { if (e.target === lbScroll) closeLightbox(); };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) closeLightbox(); });
 
   // ---------- start ----------
   (async () => {
