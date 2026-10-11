@@ -124,7 +124,7 @@
   $('#files').onchange = e => { addFiles([...e.target.files]); e.target.value = ''; };
 
   // ---------- upload ----------
-  async function toJpeg(file, max = 1600) {      // resize + re-encode; location is stored in photos.json
+  async function toJpeg(file, max = 2400) {      // resize + re-encode; location is stored in photos.json
     const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
     const k = Math.min(1, max / Math.max(bmp.width, bmp.height));
     const c = document.createElement('canvas'); c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
