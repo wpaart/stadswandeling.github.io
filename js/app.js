@@ -20,6 +20,45 @@
     maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
+  // ---------- optional historic layer: Ferraris map (Digitaal Vlaanderen WMTS) ----------
+  // The service offers a Web-Mercator tile matrix set ("GoogleMapsVL"), so plain XYZ addressing works.
+  const ferraris = L.tileLayer(
+    'https://geo.api.vlaanderen.be/HISTCART/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=ferraris&STYLE=&FORMAT=image/png&TILEMATRIXSET=GoogleMapsVL&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+    { maxZoom: 19, opacity: 0.75,
+      attribution: 'Ferraris map (1771–78) &copy; <a href="https://www.vlaanderen.be/digitaal-vlaanderen">Digitaal Vlaanderen</a>' });
+
+  const PREF = 'leuvenwalk.layers';
+  let prefs = { ferraris: false, opacity: 75 };
+  try { prefs = { ...prefs, ...JSON.parse(localStorage.getItem(PREF) || '{}') }; } catch (e) {}
+  const savePrefs = () => { try { localStorage.setItem(PREF, JSON.stringify(prefs)); } catch (e) {} };
+
+  document.querySelector('.fabs').insertAdjacentHTML('afterbegin', `
+    <button id="layers-btn" class="fab" aria-label="Map layers" aria-expanded="false" title="Map layers">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg>
+    </button>`);
+  document.body.insertAdjacentHTML('beforeend', `
+    <div id="layers-panel" hidden>
+      <label class="chk"><input type="checkbox" id="l-ferraris"> Historic Ferraris map (1771–78)</label>
+      <label class="op">Opacity <input type="range" id="l-op" min="20" max="100" step="5"></label>
+      <p>Covers Flanders only. Lower the opacity to see today's streets through the old map.</p>
+    </div>`);
+
+  function applyLayers() {
+    $('#l-ferraris').checked = prefs.ferraris;
+    $('#l-op').value = prefs.opacity; $('#l-op').disabled = !prefs.ferraris;
+    ferraris.setOpacity(prefs.opacity / 100);
+    if (prefs.ferraris) ferraris.addTo(map); else ferraris.remove();
+  }
+  $('#l-ferraris').onchange = e => { prefs.ferraris = e.target.checked; savePrefs(); applyLayers(); };
+  $('#l-op').oninput = e => { prefs.opacity = +e.target.value; ferraris.setOpacity(prefs.opacity / 100); };
+  $('#l-op').onchange = savePrefs;
+  $('#layers-btn').onclick = () => {
+    const panel = $('#layers-panel'); panel.hidden = !panel.hidden;
+    $('#layers-btn').setAttribute('aria-expanded', String(!panel.hidden));
+  };
+  map.on('click', () => { $('#layers-panel').hidden = true; $('#layers-btn').setAttribute('aria-expanded', 'false'); });
+  applyLayers();
+
   let walk = { stops: [] }, photos = [], me = null, following = false, watchId = null;
   const photoMarkers = new Map(), stopMarkers = new Map(), seenNear = new Set();
   let meMarker = null, meCircle = null;
