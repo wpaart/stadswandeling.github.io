@@ -32,5 +32,5 @@ Edit `data/walk.json`. The stop coordinates for Leuven are approximate. Check th
 - The public OSM tile server is fine for small projects. For heavy traffic, use a tile provider or see the OSM tile usage policy.
 - "Near you" photos use a configurable radius (30 to 250 m). Moving within that radius of a photo shows a notice and highlights its marker.
 
-## Historic map layer
-The layers button (top right) toggles the Ferraris map (1771–78) from Digitaal Vlaanderen's WMTS (`https://geo.api.vlaanderen.be/HISTCART/wmts`, layer `ferraris`, tile matrix set `GoogleMapsVL`) on top of OpenStreetMap, with an opacity slider. The choice is remembered in the browser. The service covers Flanders only. To add another layer from the same service (for example Vandermaelen), copy the `ferraris` definition in `js/app.js` and change the `LAYER` parameter to the layer id listed in the service's GetCapabilities.
+## Historic map layers
+The layers button (top right) lets you choose a historic map to draw on top of OpenStreetMap: Ferraris (1771–78) or Vandermaelen (1846–54), with an opacity slider. Both come from Digitaal Vlaanderen's WMTS (`https://geo.api.vlaanderen.be/HISTCART/wmts`, tile matrix set `GoogleMapsVL`, layer ids `ferraris` and `vandermaelen`). The choice is remembered in the browser. The service covers Flanders only. To add another map from the same service (Popp: `popp`, Fricx: `frickx`), add an entry to the `HISTORIC` object in `js/app.js`.
