@@ -19,7 +19,7 @@ photos/           uploaded images
 1. In GitHub: Settings → Developer settings → Fine-grained tokens. Limit it to this repository with **Contents: Read and write**.
 2. Open `admin.html`, enter user, repository, branch and the token, and save.
 3. Choose photos. GPS is read from EXIF. For photos without GPS, select the card and click the map, drag the pin, or use your current location.
-4. Upload. Images are resized to 1600 px, committed to `photos/`, and listed in `data/photos.json`. The site refreshes after Pages redeploys (about a minute).
+4. Upload. Images are resized to 2400 px (the size shown in the full-size viewer), committed to `photos/`, and listed in `data/photos.json`. The site refreshes after Pages redeploys (about a minute).
 
 Notes:
 - iPhones strip location from shared photos unless "Location" is enabled in the share sheet options. Manual placement covers this.
@@ -31,3 +31,6 @@ Edit `data/walk.json`. The stop coordinates for Leuven are approximate. Check th
 ## Notes
 - The public OSM tile server is fine for small projects. For heavy traffic, use a tile provider or see the OSM tile usage policy.
 - "Near you" photos use a configurable radius (30 to 250 m). Moving within that radius of a photo shows a notice and highlights its marker.
+
+## Historic map layer
+The layers button (top right) toggles the Ferraris map (1771–78) from Digitaal Vlaanderen's WMTS (`https://geo.api.vlaanderen.be/HISTCART/wmts`, layer `ferraris`, tile matrix set `GoogleMapsVL`) on top of OpenStreetMap, with an opacity slider. The choice is remembered in the browser. The service covers Flanders only. To add another layer from the same service (for example Vandermaelen), copy the `ferraris` definition in `js/app.js` and change the `LAYER` parameter to the layer id listed in the service's GetCapabilities.
