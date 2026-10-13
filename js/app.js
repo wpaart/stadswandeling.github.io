@@ -50,7 +50,7 @@
       <label class="chk"><input type="radio" name="hist" value="none"> None</label>
       ${Object.entries(HISTORIC).map(([k, h]) => `<label class="chk"><input type="radio" name="hist" value="${k}"> ${h.label}</label>`).join('')}
       <label class="op">Opacity <input type="range" id="l-op" min="20" max="100" step="5"></label>
-      <p>Covers Flanders only. Lower the opacity to see today's streets through the old map.</p>
+      <p>Covers Flanders only. Lower the opacity to see today's streets through the old map. <span style="opacity:.6">(app v5)</span></p>
     </div>`);
 
   // Core positioning is set inline so the panel is visible even if an older style.css is cached/deployed.
