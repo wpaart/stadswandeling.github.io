@@ -20,17 +20,25 @@
     maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // ---------- optional historic layer: Ferraris map (Digitaal Vlaanderen WMTS) ----------
+  // ---------- optional historic layers (Digitaal Vlaanderen WMTS, Flanders only) ----------
   // The service offers a Web-Mercator tile matrix set ("GoogleMapsVL"), so plain XYZ addressing works.
-  const ferraris = L.tileLayer(
-    'https://geo.api.vlaanderen.be/HISTCART/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=ferraris&STYLE=&FORMAT=image/png&TILEMATRIXSET=GoogleMapsVL&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
-    { maxZoom: 19, opacity: 0.75,
-      attribution: 'Ferraris map (1771–78) &copy; <a href="https://www.vlaanderen.be/digitaal-vlaanderen">Digitaal Vlaanderen</a>' });
+  const histUrl = layer => 'https://geo.api.vlaanderen.be/HISTCART/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=' + layer +
+    '&STYLE=&FORMAT=image/png&TILEMATRIXSET=GoogleMapsVL&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}';
+  const credit = '&copy; <a href="https://www.vlaanderen.be/digitaal-vlaanderen">Digitaal Vlaanderen</a>';
+  const HISTORIC = {
+    ferraris:    { label: 'Ferraris map (1771–78)',      layer: L.tileLayer(histUrl('ferraris'),    { maxZoom: 19, attribution: 'Ferraris map ' + credit }) },
+    vandermaelen:{ label: 'Vandermaelen map (1846–54)',  layer: L.tileLayer(histUrl('vandermaelen'), { maxZoom: 19, attribution: 'Vandermaelen map ' + credit }) }
+  };
 
   const PREF = 'leuvenwalk.layers';
-  let prefs = { ferraris: false, opacity: 75 };
-  try { prefs = { ...prefs, ...JSON.parse(localStorage.getItem(PREF) || '{}') }; } catch (e) {}
-  const savePrefs = () => { try { localStorage.setItem(PREF, JSON.stringify(prefs)); } catch (e) {} };
+  let prefs = { historic: 'none', opacity: 75 };
+  try {
+    const saved = JSON.parse(localStorage.getItem(PREF) || '{}');
+    if (saved.ferraris === true && !saved.historic) saved.historic = 'ferraris';   // older saved format
+    prefs = { ...prefs, ...saved };
+  } catch (e) {}
+  if (prefs.historic !== 'none' && !HISTORIC[prefs.historic]) prefs.historic = 'none';
+  const savePrefs = () => { try { localStorage.setItem(PREF, JSON.stringify({ historic: prefs.historic, opacity: prefs.opacity })); } catch (e) {} };
 
   document.querySelector('.fabs').insertAdjacentHTML('afterbegin', `
     <button id="layers-btn" class="fab" aria-label="Map layers" aria-expanded="false" title="Map layers">
@@ -38,19 +46,29 @@
     </button>`);
   document.body.insertAdjacentHTML('beforeend', `
     <div id="layers-panel" hidden>
-      <label class="chk"><input type="checkbox" id="l-ferraris"> Historic Ferraris map (1771–78)</label>
+      <strong>Historic map</strong>
+      <label class="chk"><input type="radio" name="hist" value="none"> None</label>
+      ${Object.entries(HISTORIC).map(([k, h]) => `<label class="chk"><input type="radio" name="hist" value="${k}"> ${h.label}</label>`).join('')}
       <label class="op">Opacity <input type="range" id="l-op" min="20" max="100" step="5"></label>
       <p>Covers Flanders only. Lower the opacity to see today's streets through the old map.</p>
     </div>`);
 
+  // Core positioning is set inline so the panel is visible even if an older style.css is cached/deployed.
+  Object.assign($('#layers-panel').style, {
+    position: 'fixed', zIndex: '1000', top: 'calc(10px + env(safe-area-inset-top, 0px))', right: '64px',
+    width: 'min(280px, calc(100vw - 150px))', background: '#fff', borderRadius: '12px',
+    boxShadow: '0 2px 12px rgba(0,0,0,.35)', padding: '12px 14px', fontSize: '14px', boxSizing: 'border-box'
+  });
+
   function applyLayers() {
-    $('#l-ferraris').checked = prefs.ferraris;
-    $('#l-op').value = prefs.opacity; $('#l-op').disabled = !prefs.ferraris;
-    ferraris.setOpacity(prefs.opacity / 100);
-    if (prefs.ferraris) ferraris.addTo(map); else ferraris.remove();
+    Object.entries(HISTORIC).forEach(([k, h]) => {
+      if (k === prefs.historic) { h.layer.setOpacity(prefs.opacity / 100); h.layer.addTo(map); } else h.layer.remove();
+    });
+    document.querySelectorAll('input[name="hist"]').forEach(r => r.checked = r.value === prefs.historic);
+    $('#l-op').value = prefs.opacity; $('#l-op').disabled = prefs.historic === 'none';
   }
-  $('#l-ferraris').onchange = e => { prefs.ferraris = e.target.checked; savePrefs(); applyLayers(); };
-  $('#l-op').oninput = e => { prefs.opacity = +e.target.value; ferraris.setOpacity(prefs.opacity / 100); };
+  document.querySelectorAll('input[name="hist"]').forEach(r => r.onchange = () => { prefs.historic = r.value; savePrefs(); applyLayers(); });
+  $('#l-op').oninput = e => { prefs.opacity = +e.target.value; const h = HISTORIC[prefs.historic]; if (h) h.layer.setOpacity(prefs.opacity / 100); };
   $('#l-op').onchange = savePrefs;
   $('#layers-btn').onclick = () => {
     const panel = $('#layers-panel'); panel.hidden = !panel.hidden;
