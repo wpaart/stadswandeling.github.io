@@ -36,6 +36,16 @@
     { "id": "predikherenkerk", "name": "Poortje langs de Predikherenkerk", "lat": 50.878782, "lng": 4.696502,
       "text": "Poortjes altijd plezant." },
     { "id": "huismorillon", "name": "Huis Morillon", "lat": 50.879216, "lng": 4.696870,
-      "text": "Stadspaleisje van Gui Morillon, secretaris van Karel V. Later een klooster, nu een hotel. En het heeft een poortje." }
+      "text": "Stadspaleisje van Gui Morillon, secretaris van Karel V. Later een klooster, nu een hotel. En het heeft een poortje." },
+    { "id": "dijlebrug", "name": "Nog eens over de dijle", "lat": 50.879823, "lng": 4.698425,
+      "text": "We steken nog eens de Dijle over richting Sint-Pieterskerk." },
+    { "id": "sint-pieterskerk", "name": "Sint-Pieterskerk", "lat": 50.879870, "lng": 4.700551,
+      "text": "Waar ze in de late Middeleeuwen de originele Romaanse kerk afbraken en stapsgewijs vervingen door een Gotisch exemplaar." },
+    { "id": "vismarkt", "name": "Vismarkt", "lat": 50.881667, "lng": 4.700117,
+      "text": "Vismarkt want vandaag volgen we het water." },
+    { "id": "sint-geertrui", "name": "Sint-Geertrui", "lat": 50.883469, "lng": 4.699086,
+      "text": "Waar een creatieve pater na de eerste wereldoorlog de brokstukken van het afgebrande klooster recycleerde in nieuwe gevels." },
+    { "id": "klein-begijnhof", "name": "Klein Begijnhof", "lat": 50.884950, "lng": 4.698898,
+      "text": "Sinds de dertiende eeuw een wijk waar zelfstandige vrouwen woonden die kozen voor een eenvoudig en toegewijd leven. (Middeleeuwse vrouwen met veel geld die onder geen enkel beding met een man wilden samenwonen.)" }
   ]
 }
