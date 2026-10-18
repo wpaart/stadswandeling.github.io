@@ -17,7 +17,15 @@
       "text": "We wandelen verder langs een Dijlearm." },
     { "id": "hambrugpad", "name": "Hambrugpad", "lat": 50.884695, "lng": 4.695343,
       "text": "We volgen de dijle doorheen vernieuwde woonwijken." },
-    { "id": "sint-wintenskerk", "name": "Sint Kwintenskerk", "lat": 50.870278, "lng": 4.698611,
-      "text": "Wat kan ik zeggen, het is een kerk." }
+    { "id": "bruulpark", "name": "Bruulpark", "lat": 50.882796, "lng": 4.695340,
+      "text": "We doorkruisen het Bruulpark." },
+    { "id": "dirkbouts", "name": "Dirk Boutsstraat ", "lat": 50.882274, "lng": 4.697056,
+      "text": "Op het conservarorium prijkt een 3D muurschildering van Leon Keer." },
+    { "id": "handbooghof", "name": "Handbooghof", "lat": 50.882274, "lng": 4.697056,
+      "text": "Hier langs de restanten van de eerste stadsomwalling hadden de boogschutters hun clublokaal." },
+    { "id": "romaanse-poort", "name": "Romaanse poort", "lat": 50.880358, "lng": 4.696047,
+      "text": "We laten de Romaanse Poort en de vroegere locatie van brasserie Improvisio links liggen." },
+    { "id": "hertogensite", "name": "Hertogensite", "lat": 50.882274, "lng": 4.697056,
+      "text": "'s Hertogeneiland: Gentrificatie en stadsvernieuwing" }
   ]
 }
