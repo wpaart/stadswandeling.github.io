@@ -15,6 +15,8 @@
       "text": "We gaan de Mechelsestraat die destijds te steil was voor de tram naar beneden." },
     { "id": "jaartallenpad", "name": "Jaartallenpad", "lat": 50.885843, "lng": 4.697267,
       "text": "We wandelen verder langs een Dijlearm." },
+    { "id": "jaartallenpad2", "name": "Jaartallenpad", "lat": 50.885719, "lng": 4.696641,
+      "text": "We wandelen nog een beetje verder langs een Dijlearm." },
     { "id": "hambrugpad", "name": "Hambrugpad", "lat": 50.884695, "lng": 4.695343,
       "text": "We volgen de dijle doorheen vernieuwde woonwijken." },
     { "id": "bruulpark", "name": "Bruulpark", "lat": 50.882796, "lng": 4.695340,
