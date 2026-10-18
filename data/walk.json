@@ -1,6 +1,6 @@
 {
-  "title": "Leuven city walk",
-  "subtitle": "From the station to the Groot Begijnhof",
+  "title": "Verjaardagswandelin Christa",
+  "subtitle": "Doorheen de tijd langs de Dijle",
   "center": [50.8785, 4.7015],
   "stops": [
     { "id": "parking-vanderelst", "name": "Parking Vanderelst", "lat": 50.889035, "lng": 4.705611,
