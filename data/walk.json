@@ -5,10 +5,10 @@
   "stops": [
     { "id": "parking-vanderelst", "name": "Parking Vanderelst", "lat": 50.889035, "lng": 4.705611,
       "text": "We parkeren de wagen in de kelder van de voormalige tabaksfabriek." },
-    { "id": "parking-vaartkom", "name": "Parking Vaartkom", "lat": 50.8806, "lng": 4.7022,
+    { "id": "parking-vaartkom", "name": "Parking Vaartkom", "lat": 50.888639, "lng": 4.7000635,
       "text": "Het beste onderdeel aan deze parking is de lift." },
-    { "id": "tramweg", "name": "Langs de oude trambedding naderen we de kloostertuin op de Keizersberg.", "lat": 50.888533, "lng": 4.700297,
-      "text": "The late-Gothic Town Hall is covered in statues. Opposite stands Sint-Pieterskerk." },
+    { "id": "tramweg", "name": "Tramlijn Leuven-Herent", "lat": 50.888533, "lng": 4.700297,
+      "text": "Langs de oude trambedding naderen we de kloostertuin op de Keizersberg." },
     { "id": "oude-markt", "name": "Oude Markt", "lat": 50.8777, "lng": 4.7021,
       "text": "Known as the longest bar in Europe: a square lined with café terraces." },
     { "id": "ladeuze", "name": "Ladeuzeplein and the University Library", "lat": 50.8762, "lng": 4.7007,
