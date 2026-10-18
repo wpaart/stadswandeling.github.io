@@ -46,6 +46,14 @@
     { "id": "sint-geertrui", "name": "Sint-Geertrui", "lat": 50.883469, "lng": 4.699086,
       "text": "Waar een creatieve pater na de eerste wereldoorlog de brokstukken van het afgebrande klooster recycleerde in nieuwe gevels." },
     { "id": "klein-begijnhof", "name": "Klein Begijnhof", "lat": 50.884950, "lng": 4.698898,
-      "text": "Sinds de dertiende eeuw een wijk waar zelfstandige vrouwen woonden die kozen voor een eenvoudig en toegewijd leven. (Middeleeuwse vrouwen met veel geld die onder geen enkel beding met een man wilden samenwonen.)" }
+      "text": "Sinds de dertiende eeuw een wijk waar zelfstandige vrouwen woonden die kozen voor een eenvoudig en toegewijd leven. (Middeleeuwse vrouwen met veel geld die onder geen enkel beding met een man wilden samenwonen.)" },
+    { "id": "sluismolen", "name": "Sluismolen", "lat": 50.886264, "lng": 4.699050,
+      "text": "Oudste Leuvense watermolen waar al sinds de twaalfde eeuw gemalen wordt aan de samenloop van Voer en Dijle." },
+    { "id": "sluispark", "name": "Sluispark", "lat": 50.886896, "lng": 4.700074,
+      "text": "Het sluispark is een gezellig, klein parkje nabij de Dijle en is zeker bij warm weer een echte aanrader. Zo zijn er lange zittrappen tot aan water en een waterspeeltuin waar je kinderen volop kunnen genieten van waterpret. Grenzend aan het park bevindt zich Bar De Hoorn, waar je even kunt genieten van een drankje of een hapje of even tot rust kunt komen terwijl de kinderen zich verder amuseren. Althans volgens de toeristische dienst van Leuven." },
+    { "id": "opek", "name": "Opek", "lat": 50.887624, "lng": 4.700605,
+      "text": "Openbaar Entrepot voor de Kunsten." },
+    { "id": "eindpunt", "name": "Eindpunt", "lat": 50.889045, "lng": 4.705464,
+      "text": "Tijd om thuis op te warmen." }
   ]
 }
